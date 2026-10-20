@@ -26,7 +26,7 @@ Sets, placeholder-free f-strings, triple-quoted strings and non-string dict keys
 
 ### Duplicate check
 
-Upstream `main` has no pythonic parser under `rust/src/parser/src/tool/`, and no open PR adds one. The related open `[Rust Frontend]` parser PRs are #52579 (OLMo 3, which uses the same keyword-argument call syntax but brings its own literal parser), #52841 (ERNIE 4.5) and #54393 (MiMo). If #52579 lands first I am happy to rebase on top of it and have the OLMo 3 parser reuse this shared core instead of carrying a second Python-literal grammar.
+Upstream `main` has no pythonic parser under `rust/src/parser/src/tool/`, and no open PR adds one. The closest related open PR is #52579 (OLMo 3), which uses the same keyword-argument call syntax but brings its own literal parser. If #52579 lands first I am happy to rebase on top of it and have the OLMo 3 parser reuse this shared core instead of carrying a second Python-literal grammar.
 
 ## Test Plan
 
@@ -49,8 +49,8 @@ pre-commit run --files <changed files>
 
 - `cargo fmt --all -- --check`: clean.
 - `cargo clippy -p vllm-parser -p vllm-chat --all-targets --all-features --locked -- -D warnings`: no warnings.
-- `cargo test -p vllm-parser --all-features --locked`: 495 passed, 0 failed.
-- `cargo test -p vllm-chat --all-features --locked --lib`: 349 passed, 0 failed.
+- `cargo test -p vllm-parser --all-features --locked`: 645 passed, 0 failed.
+- `cargo test -p vllm-chat --all-features --locked --lib`: 390 passed, 0 failed.
 - `cargo bench -p vllm-parser --features test-util --bench pythonic -- --test`: all groups succeed.
 - `cargo doc -p vllm-parser --no-deps`: no warnings.
 - `pre-commit run --files <changed files>`: all applicable hooks pass.
